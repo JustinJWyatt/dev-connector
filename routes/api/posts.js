@@ -57,7 +57,7 @@ router.get('/:id', (req, res) => {
 });
 
 //@route  DELETE /api/posts/:id
-//@desc   Delet a post
+//@desc   Delete a post
 //@access Private
 router.delete('/:id', passport.authenticate('jwt', {
   session: false
@@ -68,14 +68,16 @@ router.delete('/:id', passport.authenticate('jwt', {
 
     Post.findById(req.params.id).then(post => {
 
-      if(post.user.toString() !== req.user.id){
+      if (post.user.toString() !== req.user.id) {
 
         return res.status(401).json({
           unauthorized: 'You are unauthorized to delete this post'
         });
       }
 
-      post.remove().then(() => res.json({ success: true }));
+      post.remove().then(() => res.json({
+        success: true
+      }));
 
     }).catch(err => res.status(404).json({
       noPost: 'No post was found by the id: ' + req.user.id
@@ -84,6 +86,36 @@ router.delete('/:id', passport.authenticate('jwt', {
   }).catch(err => res.status(404).json({
     unauthorized: 'Could not find user'
   }))
+});
+
+//@route  POST /api/posts/like/:post_id
+//@desc   Like post
+//@access Private
+router.post('/like/:post_id', passport.authenticate('jwt', {
+  session: false
+}), (req, res) => {
+  Profile.findOne({
+    user: req.user.id
+  }).then(profile => {
+
+    Post.findById(req.params.post_id).then(post => {
+
+      if (post.likes.filter(like => like.user.toString() === req.user.id).length > 0) {
+        return res.status(400).json({
+          duplicateLikeException: 'You already liked this post'
+        });
+      }
+
+      post.likes.unshift({
+        user: req.user.id
+      });
+
+      post.save().then(post => res.json(post));
+    }).catch(err => res.status(404).json({  notFound: 'Could not find post' }));
+
+  }).catch(err => res.status(404).json({
+    notFound: 'Could not find post'
+  }));
 });
 
 module.exports = router;
