@@ -139,7 +139,7 @@ router.post('/unlike/:post_id', passport.authenticate('jwt', {
       }
 
       const removeIndex = post.likes.map(item => item.user.toString())
-                                    .indexOf(req.user.id);
+        .indexOf(req.user.id);
 
       post.likes.splice(removeIndex, 1);
 
@@ -153,5 +153,33 @@ router.post('/unlike/:post_id', passport.authenticate('jwt', {
     notFound: 'Could not find post'
   }));
 });
+
+//@route  POST /api/posts/comment/:post_id
+//@desc   Add comment to post
+//@access Private
+router.post('/comment/:post_id', passport.authenticate('jwt', {
+  session: false
+}), (req, res) => {
+    Post.findById(req.params.post_id).then(post => {
+
+      const { errors, isValid } = validatePostInput(req.body); 
+
+      if(!isValid) {
+        return res.status(400).json(errors);
+      }
+
+      const newComment = {
+        text: req.body.text,
+        name: req.body.name,
+        avatar: req.body.avatar,
+        user: req.user.id
+      };
+
+      post.comments.unshift(newComment);
+
+      post.save().then(post => res.json(post));
+
+    }).catch(err => res.status(404).json({ notFound: 'No post found' }));
+})
 
 module.exports = router;
