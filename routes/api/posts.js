@@ -202,7 +202,7 @@ router.delete('/comment/:post_id/:comment_id', passport.authenticate('jwt', {
     }
 
     const removeIndex = post.comments.map(item => item._id.toString())
-                                     .indexOf(req.params.comment_id);
+      .indexOf(req.params.comment_id);
 
     post.comments.splice(removeIndex, 1);
 
