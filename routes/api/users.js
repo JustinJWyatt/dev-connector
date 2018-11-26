@@ -84,8 +84,15 @@ router.post('/login', (req, res) => {
         return res.status(400).json({ password: 'Password incorrect'});
       }
     })
-  })
-
+  });
 });
+
+//@route  GET /api/users/current
+//@desc   Return current user
+//@access Private
+router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
+    res.json({msg: 'success'});
+});
+
 
 module.exports = router;
