@@ -17,7 +17,7 @@ router.get('/', passport.authenticate('jwt', {
 
   Profile.findOne({
     user: req.user.id
-  }).then(profile => {
+  }).populate('user', ['name', 'avatar']).then(profile => {
     if (!profile) {
       errors.noProfile = 'There is no profile for this user';
       return res.status(404).json(errors)
@@ -35,9 +35,12 @@ router.post('/', passport.authenticate('jwt', {
   session: false
 }), (req, res) => {
 
-  const { errors, isValid } = validateProfileInput(req.body);
+  const {
+    errors,
+    isValid
+  } = validateProfileInput(req.body);
 
-  if(!isValid){
+  if (!isValid) {
     return res.status(400).json(errors);
   }
 
@@ -53,7 +56,7 @@ router.post('/', passport.authenticate('jwt', {
   if (req.body.githubusername) profileFields.githubusername = req.body.githubusername;
 
   if (typeof req.body.skills != 'undefined') {
-    profileFields.skills = req.body.skills.split('');
+    profileFields.skills = req.body.skills.split(',');
   }
 
   profileFields.social = {};
@@ -74,10 +77,12 @@ router.post('/', passport.authenticate('jwt', {
       }, {
         new: true
       }).then(profile => res.json(profile));
-    }else{
+    } else {
       //create
-      Profile.findOne({ handle: profileFields.handle }).then(profile => {
-        if(profile){
+      Profile.findOne({
+        handle: profileFields.handle
+      }).then(profile => {
+        if (profile) {
           errors.handle = 'That handle already exists';
           return res.status(400).json(errors);
         }
