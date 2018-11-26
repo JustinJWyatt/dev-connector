@@ -5,6 +5,7 @@ const app = express();
 const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
+const passport = require('passport');
 
 const db = require('./config/keys').mongoURI;
 
@@ -14,6 +15,10 @@ app.get('/', (req, res) => res.send('test'));
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json());
+app.use(passport.initialize());
+
+//passport config
+require('../config/passport')(passport);
 
 app.use('/api/users', users);
 app.use('/api/profile', profile);
