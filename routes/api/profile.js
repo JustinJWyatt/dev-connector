@@ -5,6 +5,8 @@ const passport = require('passport');
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 const validateProfileInput = require('../../validation/profile');
+const validateExperienceInput = require('../../validation/profile');
+
 
 //@route  GET /api/profile/current
 //@desc   Get current user's profile
