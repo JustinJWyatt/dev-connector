@@ -14,10 +14,23 @@ class Register extends React.Component {
     };
 
     this.onChange.bind(this);
+    this.onSubmit.bind(this);
   }
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value});
+  };
+
+  onSubmit = e => {
+
+    e.preventDefault();
+
+    const newUser = {
+      name: this.state.name,
+      email: this.state.email,
+      password: this.state.password,
+      password2: this.state.password2
+    };
   }
 
   render() {
@@ -30,7 +43,7 @@ class Register extends React.Component {
               <p className="lead text-center">
                 Create your DevConnector account
               </p>
-              <form action="create-profile.html">
+              <form action="create-profile.html" onSubmit={this.onSubmit}>
                 <div className="form-group">
                   <input
                     value={this.state.name}
