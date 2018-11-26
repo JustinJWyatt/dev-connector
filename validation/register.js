@@ -30,6 +30,10 @@ module.exports = data => {
     errors.password = 'Password field is required';
   }
 
+  if(Validator.isEmpty(data.password)){
+    errors.password2 = 'Must confirm password';
+  }
+
   if(!Validator.isLength(data.password, { min: 6, max: 30 })){
     errors.password = 'Password must be at least 6 characters';
   }
