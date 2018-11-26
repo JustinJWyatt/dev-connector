@@ -36,7 +36,7 @@ const ProfileSchema = new Schema({
   },
   experience: [{
     title: {
-      String,
+      type: String,
       required: true
     },
     company: {
@@ -63,7 +63,7 @@ const ProfileSchema = new Schema({
   }],
   education: [{
     school: {
-      String,
+      type: String,
       required: true
     },
     degree: {
@@ -113,5 +113,3 @@ const ProfileSchema = new Schema({
 });
 
 module.exports = Profile = mongoose.model('profile', ProfileSchema);
-
-module.exports = User = mongoose.model('users', UserSchema);
