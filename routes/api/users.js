@@ -25,6 +25,8 @@ router.post('/register', (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
   if(!isValid){
+
+    console.log(req.body);
     return res.status(400).json(errors);
   }
 
@@ -42,7 +44,7 @@ router.post('/register', (req, res) => {
         d: 'mm' //default
       })
 
-      const newUser = new User({ 
+      const newUser = new User({
         name: req.body.name,
         email: req.body.email,
         avatar: avatar,
