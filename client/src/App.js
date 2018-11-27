@@ -6,13 +6,22 @@ import store from './store';
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import Landing from "./components/layout/Landing";
-
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./utils/setAuthToken";
+import { setCurrentUser } from "./actions/authActions";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 
 import "./App.css";
 
+if(localStorage.jwtToken){
+  setAuthToken(localStorage.jwtToken);
+  const decoded = jwt_decode(localStorage.jwtToken);
+  store.dispatch(setCurrentUser(decoded));
+}
+
 class App extends Component {
+
   render() {
     return (
       <Provider store={store}>
