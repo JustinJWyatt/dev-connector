@@ -7,7 +7,12 @@ import { clearCurrentProfile } from "../../actions/profileActions";
 
 class Navbar extends React.Component {
 
+  constructor(){
+    super();
+  }
+
   onLogoutClick = e => {
+
     e.preventDefault();
     this.props.logoutUser();
     this.props.clearCurrentProfile();

@@ -9,8 +9,7 @@ const passport = require('passport');
 
 const db = require('./config/keys').mongoURI;
 
-mongoose.connect('mongodb://localhost:27017/dev-connector', { useNewUrlParser: true })
-        .then(() => console.log('mongodb connected'), (err) => console.log(err));
+mongoose.connect('mongodb://abc123:abc123@ds115244.mlab.com:15244/dev-connector', { useNewUrlParser: true }).then(() => console.log('mongodb connected'), (err) => console.log(err));
 
 app.get('/', (req, res) => res.send('test'));
 

@@ -61,7 +61,7 @@ class Login extends React.Component {
               <p className="lead text-center">
                 Sign in to your DevConnector account
               </p>
-              <form onSubmit={this.onSubmit} action="dashboard.html">
+              <form onSubmit={this.onSubmit}>
                 <TextFieldInputGroup
                   placeholder="Email Address"
                   name="email"

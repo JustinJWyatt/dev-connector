@@ -70,6 +70,7 @@ class Register extends React.Component {
                 <TextFieldInputGroup
                   placeholder="Name"
                   name="name"
+                  type="text"
                   value={this.state.name}
                   onChange={this.onChange}
                   error={errors.name}
@@ -98,7 +99,7 @@ class Register extends React.Component {
                 <TextFieldInputGroup
                   placeholder="Confirm Password"
                   name="password2"
-                  type="password2"
+                  type="password"
                   value={this.state.password2}
                   onChange={this.onChange}
                   error={errors.password2}

@@ -11,6 +11,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
+import { clearCurrentProfile } from "./actions/profileActions";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 
@@ -23,7 +24,8 @@ if (localStorage.jwtToken) {
   const now = Date.now() / 1000;
   if (decoded.exp < now) {
     store.dispatch(logoutUser());
-    window.location.href = "/login";
+    store.dispatch(clearCurrentProfile());
+    window.location.href = '/login';
   }
 }
 
